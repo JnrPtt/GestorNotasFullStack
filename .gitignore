@@ -1,0 +1,12 @@
+# Node.js
+/Frontend/node_modules/
+
+# Backend build files (ajusta según el framework que estés usando)
+/Backend/target/
+/Backend/out/
+
+# Archivos de IDEs (IntelliJ, Webstorm, etc)
+.idea/
+
+# Archivos de logs
+*.log

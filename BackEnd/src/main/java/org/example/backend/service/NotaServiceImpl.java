@@ -3,6 +3,7 @@ package org.example.backend.service;
 import org.example.backend.dto.NotaRequestDTO;
 import org.example.backend.dto.NotaResponseDTO;
 import org.example.backend.exception.NotaNotFoundException;
+import org.example.backend.mapper.NotaMapper;
 import org.example.backend.model.Nota;
 import org.example.backend.Repository.NotaRepository;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,11 @@ public class NotaServiceImpl implements NotaService {
     public NotaServiceImpl(NotaRepository notaRepository) {
         this.notaRepository = notaRepository;
     }
-
-    private NotaResponseDTO mapToDTO(Nota nota){
-        return new NotaResponseDTO(
-                nota.getId(),
-                nota.getTitulo(),
-                nota.getContenido(),
-                nota.getFechaCreacion().format(DateTimeFormatter.ISO_DATE)
-        );
-    }
-
+    
     @Override
     public List<NotaResponseDTO> findAll() {
         return notaRepository.findAll().stream()
-                .map(this::mapToDTO)
+                .map(NotaMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -39,33 +31,31 @@ public class NotaServiceImpl implements NotaService {
     public NotaResponseDTO getNotaById(Long id) {
         Nota nota = notaRepository.findById(id)
                 .orElseThrow(() -> new NotaNotFoundException(id));
-        return mapToDTO(nota);
+        return NotaMapper.toResponseDTO(nota);
     }
 
     @Override
     public NotaResponseDTO crearNota(NotaRequestDTO notaRequestDTO) {
-        Nota nota = Nota.builder()
-                .titulo(notaRequestDTO.getTitulo())
-                .contenido(notaRequestDTO.getContenido())
-                .build();
-        nota = notaRepository.save(nota);
-        return mapToDTO(nota);
+        Nota nota = NotaMapper.toEntity(notaRequestDTO);
+        Nota notaGuardada = notaRepository.save(nota);
+        return NotaMapper.toResponseDTO(notaGuardada);
     }
 
     @Override
     public NotaResponseDTO actualizarNota(Long id,NotaRequestDTO dto) {
-        Nota nota = notaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nota no encontrada"));
-        nota.setTitulo(dto.getTitulo());
-        nota.setContenido(dto.getContenido());
-        nota = notaRepository.save(nota);
-        return mapToDTO(nota);
+        Nota notaExistente = notaRepository.findById(id)
+                .orElseThrow(() -> new NotaNotFoundException(id));
+
+        NotaMapper.updateEntityFromDTO(dto, notaExistente);
+
+        Nota notaActualizada = notaRepository.save(notaExistente);
+        return NotaMapper.toResponseDTO(notaActualizada);
     }
 
     @Override
     public void eliminarNota(Long id) {
         if(!notaRepository.existsById(id)){
-            throw new RuntimeException("Nota no encontrada");
+            throw new NotaNotFoundException(id);
         }
         notaRepository.deleteById(id);
     }

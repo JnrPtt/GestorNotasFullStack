@@ -7,8 +7,10 @@ import org.example.backend.mapper.NotaMapper;
 import org.example.backend.model.Nota;
 import org.example.backend.Repository.NotaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +21,7 @@ public class NotaServiceImpl implements NotaService {
     public NotaServiceImpl(NotaRepository notaRepository) {
         this.notaRepository = notaRepository;
     }
-    
+
     @Override
     public List<NotaResponseDTO> findAll() {
         return notaRepository.findAll().stream()
@@ -58,5 +60,11 @@ public class NotaServiceImpl implements NotaService {
             throw new NotaNotFoundException(id);
         }
         notaRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<NotaResponseDTO> getNotasPaginadas(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return notaRepository.findAll(pageRequest).map(NotaMapper::toResponseDTO);
     }
 }

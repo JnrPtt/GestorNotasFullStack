@@ -5,6 +5,9 @@ import org.example.backend.dto.NotaRequestDTO;
 import org.example.backend.dto.NotaResponseDTO;
 import org.example.backend.service.NotaService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -42,5 +45,13 @@ public class NotaController {
     @DeleteMapping("/{id}")
     public void eliminarNota(@PathVariable Long id){
         notaService.eliminarNota(id);
+    }
+
+    @GetMapping("/paginadas")
+    public Page<NotaResponseDTO> getNotasPaginadas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return notaService.getNotasPaginadas(page, size);
     }
 }

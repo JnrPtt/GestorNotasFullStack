@@ -2,6 +2,7 @@ package org.example.backend.service;
 
 import org.example.backend.dto.NotaRequestDTO;
 import org.example.backend.dto.NotaResponseDTO;
+import org.example.backend.exception.NotaNotFoundException;
 import org.example.backend.model.Nota;
 import org.example.backend.Repository.NotaRepository;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class NotaServiceImpl implements NotaService {
     @Override
     public NotaResponseDTO getNotaById(Long id) {
         Nota nota = notaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+                .orElseThrow(() -> new NotaNotFoundException(id));
         return mapToDTO(nota);
     }
 

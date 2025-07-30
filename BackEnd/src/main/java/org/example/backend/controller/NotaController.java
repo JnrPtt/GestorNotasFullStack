@@ -1,5 +1,6 @@
 package org.example.backend.controller;
 
+import jakarta.validation.Valid;
 import org.example.backend.dto.NotaRequestDTO;
 import org.example.backend.dto.NotaResponseDTO;
 import org.example.backend.service.NotaService;
@@ -29,7 +30,7 @@ public class NotaController {
     }
 
     @PostMapping
-    public NotaResponseDTO crearNota(@RequestBody NotaRequestDTO notaRequestDTO){
+    public NotaResponseDTO crearNota(@Valid @RequestBody NotaRequestDTO notaRequestDTO){
         return notaService.crearNota(notaRequestDTO);
     }
 

@@ -1,5 +1,6 @@
 package org.example.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,10 @@ import lombok.Setter;
 @Setter
 public class NotaRequestDTO {
 
+    @NotBlank(message = "El título no puede estar vacío")
     private String titulo;
+
+    @NotBlank(message = "El contenido no puede estar vacío")
     private String contenido;
 
     public NotaRequestDTO() {}

@@ -24,38 +24,44 @@ export default function EditarNota() {
         e.preventDefault();
         try {
             await actualizarNota(id, { titulo, contenido });
-            navigate(`/nota/${id}`); // volver al detalle tras guardar
+            navigate(`/nota/${id}`); // Volver al detalle tras guardar
         } catch (err) {
             setError(err.message);
         }
     };
 
-    if (error) return <div>Error: {error}</div>;
+    if (error) return <div className="error-message">Error: {error}</div>;
     if (!titulo && !contenido) return <div>Cargando...</div>;
 
     return (
-        <div>
+        <div className="editar-nota-container">
             <h2>Editar Nota</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Título:</label><br />
+            <form onSubmit={handleSubmit} className="editar-nota-form">
+                <div className="form-group">
+                    <label htmlFor="titulo">Título:</label><br />
                     <input
+                        id="titulo"
                         type="text"
                         value={titulo}
                         onChange={e => setTitulo(e.target.value)}
                         required
+                        className="input-field"
                     />
                 </div>
-                <div>
-                    <label>Contenido:</label><br />
+                <div className="form-group">
+                    <label htmlFor="contenido">Contenido:</label><br />
                     <textarea
+                        id="contenido"
                         value={contenido}
                         onChange={e => setContenido(e.target.value)}
                         required
+                        className="textarea-field"
                     />
                 </div>
-                <button type="submit">Guardar</button>
-                <button type="button" onClick={() => navigate(-1)}>Cancelar</button>
+                <div className="button-group">
+                    <button type="submit" className="btn btn-primary">Guardar</button>
+                    <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>Cancelar</button>
+                </div>
             </form>
         </div>
     );

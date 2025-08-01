@@ -37,20 +37,24 @@ export default function NotaDetalle() {
     if (!nota) return <div>Cargando...</div>;
 
     return (
-        <div>
+        <div className="nota-detalle">
             <h2>Detalle de la Nota</h2>
             <p><strong>Título:</strong> {nota.titulo}</p>
             <p><strong>Contenido:</strong> {nota.contenido}</p>
             <p><strong>ID:</strong> {nota.id}</p>
 
-            <button onClick={() => navigate(-1)}>Volver</button>
+            <div className="botones">
+                <Link to={`/nota/${id}/editar`}>
+                    <button>Editar Nota</button>
+                </Link>
 
-            <Link to={`/nota/${id}/editar`}>
-                <button>Editar Nota</button>
-            </Link>
-            <button onClick={handleEliminar} disabled={loading}>
-                {loading ? "Eliminando..." : "Eliminar Nota"}
-            </button>
+                <button onClick={handleEliminar} disabled={loading}>
+                    {loading ? "Eliminando..." : "Eliminar Nota"}
+                </button>
+
+                <button onClick={() => navigate(-1)}>Volver</button>
+            </div>
         </div>
     );
+
 }

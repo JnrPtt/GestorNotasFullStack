@@ -27,7 +27,7 @@ export default function CrearNota({ onNotaCreada}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Crear Nueva Nota</h3>
+            <h2 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Crear Nueva Nota</h2>
             {error && <p style={{color: "red"}}>{error}</p>}
             <input
                 type="text"
@@ -42,7 +42,7 @@ export default function CrearNota({ onNotaCreada}) {
                 onChange={e => setContenido(e.target.value)}
             />
             <br/>
-            <button type="submit">Crear</button>
+            <button className="crear-btn" type="submit">Crear</button>
         </form>
     )
 }

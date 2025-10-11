@@ -1,12 +1,73 @@
-# React + Vite
+# 📝 Gestor de Notas FullStack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen?style=for-the-badge&logo=spring)
+![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)
+![H2](https://img.shields.io/badge/H2-Database-blue?style=for-the-badge)
 
-Currently, two official plugins are available:
+Aplicación completa de gestión de notas desarrollada con arquitectura profesional por capas, aplicando buenas prácticas de desarrollo backend y frontend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Características Principales
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+✅ **CRUD Completo**
+- Crear, leer, actualizar y eliminar notas
+- Validaciones de campos obligatorios con Jakarta Validation
+- Feedback visual claro para todas las operaciones
+
+✅ **Arquitectura Profesional**
+- Patrón MVC en capas: Controller → Service → Repository
+- DTOs para separación entre capa de presentación y modelo de dominio
+- Código limpio y mantenible siguiendo principios SOLID
+
+✅ **API REST Escalable**
+- Endpoints RESTful bien estructurados
+- Manejo centralizado de errores
+- Respuestas HTTP apropiadas (códigos de estado)
+
+✅ **Frontend Reactivo**
+- Componentes reutilizables con React
+- Paginación dinámica para optimizar rendimiento
+- Interfaz responsive con CSS puro
+- Comunicación eficiente con backend mediante Fetch API
+
+---
+
+## 🛠️ Stack Tecnológico
+
+### Backend
+- **Java 21** - Lenguaje principal con características modernas
+- **Spring Boot 3.x** - Framework para desarrollo rápido
+- **Spring Data JPA** - Capa de persistencia con Hibernate
+- **H2 Database** - Base de datos en memoria para desarrollo
+- **Lombok** - Reducción de código boilerplate
+- **Jakarta Validation** - Validaciones de entrada
+- **Maven** - Gestión de dependencias
+
+### Frontend
+- **React 18** - Librería UI con componentes funcionales
+- **Fetch API** - Comunicación HTTP con el backend
+- **CSS3** - Estilos personalizados sin frameworks
+- **Componentes reutilizables** - Arquitectura modular
+
+---
+
+## 🏗️ Arquitectura del Sistema
+┌──────────────────────┐
+│   React Frontend     │  ← Interfaz de usuario (puerto 3000)
+│   (Componentes)      │
+└──────────┬───────────┘
+│ HTTP/REST
+│ Fetch API
+┌──────────▼───────────┐
+│   REST Controller    │  ← @RestController - Endpoints API
+├──────────────────────┤
+│   Service Layer      │  ← @Service - Lógica de negocio
+├──────────────────────┤
+│   Repository         │  ← @Repository - Acceso a datos (JPA)
+├──────────────────────┤
+│   Entity (DTO)       │  ← Modelos de datos
+├──────────────────────┤
+│   H2 Database        │  ← Base de datos en memoria
+└──────────────────────┘
